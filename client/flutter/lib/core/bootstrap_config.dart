@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:WHOFlutter/api/user_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_device_locale/flutter_device_locale.dart';
 import 'package:meta/meta.dart';
@@ -178,7 +179,7 @@ abstract class BootstrapConfig {
   //endregion
 
   Future<void> _setupLocale() async {
-    locale = sharedPreferences.getString(KeysSharedPref.LOCALE);
+    locale = UserPreferences().getLocale();
     if (locale == null) {
       final deviceLocale = await DeviceLocale.getCurrentLocale();
       if (deviceLocale != null) {

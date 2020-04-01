@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:WHOFlutter/api/user_preferences.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,19 +16,18 @@ class LocaleBloc extends IBloc {
   String get current => _current;
   String _current;
 
-  final SharedPreferences sharedPreferences;
   final bool enabled;
 
   StreamCommandPassThrough<String> _localeCommand;
   Stream<String> get stream => _localeCommand.output;
 
-  LocaleBloc({@required this.sharedPreferences, @required this.enabled, String locale}) {
+  LocaleBloc({@required this.enabled, String locale}) {
     _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale, processingStreamEnabled: false);
 
     if (enabled) {
       // seed the stream even if the value is not changed
       // try to get the last user choice
-      _stored = sharedPreferences.getString(KeysSharedPref.LOCALE);
+      _stored = UserPreferences().getLocale();
 
       _localeCommand.execute(input: locale);
     }
@@ -46,10 +46,11 @@ class LocaleBloc extends IBloc {
     if (locale != _current) {
       _current = locale;
 
+
       // print('• locale changed to $locale');
 
       if (locale != _stored) {
-        await sharedPreferences.setString(KeysSharedPref.LOCALE, locale);
+        await UserPreferences().setLocale(locale);
         _stored = locale;
       }
     }

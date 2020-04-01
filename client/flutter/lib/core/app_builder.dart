@@ -22,7 +22,7 @@ class AppBuilder extends StatefulWidget {
     @required this.sharedPreferences,
     this.enableLocale,
     this.locale,
-  })  : localeBloc = LocaleBloc(sharedPreferences: sharedPreferences, enabled: enableLocale, locale: locale),
+  })  : localeBloc = LocaleBloc(enabled: enableLocale, locale: locale),
         super(key: key);
 
   @override
