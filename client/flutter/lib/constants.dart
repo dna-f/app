@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 class Constants {
   static Color backgroundColor = Color(0xffffffff);

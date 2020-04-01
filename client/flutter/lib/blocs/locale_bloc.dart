@@ -2,11 +2,9 @@ import 'dart:async';
 
 import 'package:WHOFlutter/api/user_preferences.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constants.dart';
 import '_interfaces.dart';
-import 'stream_command.dart';
+import 'streams/stream_command.dart';
 
 /// bloc to handle locale choice
 /// You can call localeBloc.setLocale('ru'); to change current locale
@@ -22,7 +20,7 @@ class LocaleBloc extends IBloc {
   Stream<String> get stream => _localeCommand.output.distinct();
 
   LocaleBloc({@required this.enabled, String locale}) {
-    _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale, processingStreamEnabled: false);
+    _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale);
 
     if (enabled) {
       // seed the stream even if the value is not changed

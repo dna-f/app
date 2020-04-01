@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 
-import '../constants.dart';
 import 'app.dart';
 import 'app_builder.dart';
 
