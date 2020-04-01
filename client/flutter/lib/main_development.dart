@@ -6,12 +6,14 @@ class Development extends BootstrapConfig {
   Development()
       : super(
           type: Environment.DEVELOPMENT,
-          //    topicDefault: TODO_DEV,
-          //    baseUrl: Api.baseDevUrl,
-          //    authUrl: Api.authDevUrl,
-          //    socketUrl: Api.socketDevUrl,
+          // TODO: add specific setup parameters here
+          //region example
+          //    baseUrl: Api.baseUrl,
+          //    authUrl: Api.authUrl,
+          //    socketUrl: Api.socketUrl,
           //    connectTimeout: 30000,
           //    sendTimeout: 30000,
           //    receiveTimeout: 30000,
+          //endregion
         );
 }

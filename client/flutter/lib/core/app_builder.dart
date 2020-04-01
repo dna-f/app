@@ -12,7 +12,6 @@ class AppBuilder extends StatefulWidget {
   final Widget theApp;
   final SharedPreferences sharedPreferences;
 
-  final bool enableLocale;
   final String locale;
   final LocaleBloc localeBloc;
 
@@ -20,9 +19,8 @@ class AppBuilder extends StatefulWidget {
     Key key,
     @required this.theApp,
     @required this.sharedPreferences,
-    this.enableLocale,
     this.locale,
-  })  : localeBloc = LocaleBloc(enabled: enableLocale, locale: locale),
+  })  : localeBloc = LocaleBloc(locale: locale),
         super(key: key);
 
   @override

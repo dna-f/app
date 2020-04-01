@@ -12,7 +12,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'app.dart';
 import 'app_builder.dart';
 
-enum Environment { DEVELOPMENT, STAGING, PRODUCTION }
+enum Environment { DEVELOPMENT, PRODUCTION }
 
 PackageInfo _packageInfo;
 
@@ -22,24 +22,18 @@ abstract class BootstrapConfig {
   static BootstrapConfig get current => _singleton;
   static BootstrapConfig _singleton;
 
-  //  final String topicDefault;
-  //
+  // TODO: add specific setup parameters here
+  //region example
   //  final String baseUrl;
   //  final String authUrl;
   //  final String socketUrl;
-  //
+
   //  final int connectTimeout;
   //  final int sendTimeout;
   //  final int receiveTimeout;
+  //endregion
 
   final Environment type;
-
-  //region cache config
-
-  //  final String cacheName;
-  //  final int cacheVersion;
-
-  //endregion
 
   String locale;
 
@@ -48,16 +42,15 @@ abstract class BootstrapConfig {
 
   BootstrapConfig({
     @required this.type,
-    //    @required this.appName,
-    //    this.topicDefault,
+    // TODO: add specific setup parameters here
+    //region example
     //    this.baseUrl,
     //    this.authUrl,
     //    this.socketUrl,
-    //    this.cacheName,
-    //    this.cacheVersion = 1,
     //    this.connectTimeout,
     //    this.sendTimeout,
     //    this.receiveTimeout,
+    //endregion
   }) : assert(_singleton == null) {
     _singleton = this;
     _bootstrap();
@@ -72,7 +65,6 @@ abstract class BootstrapConfig {
 
     switch (type) {
       case Environment.DEVELOPMENT:
-      case Environment.STAGING:
         //        if (Platform.isAndroid) {
         //          // hance network debugging through Chrome dev tools (on Android build)
         //          Stetho.initialize(); // en
@@ -81,7 +73,7 @@ abstract class BootstrapConfig {
         break;
 
       case Environment.PRODUCTION:
-        // NOTE: avoid error red screen
+        // TODO: uncomment to avoid error red screen
         //        ErrorWidget.builder = (FlutterErrorDetails details) => Empty;
         break;
 
@@ -89,29 +81,13 @@ abstract class BootstrapConfig {
         break;
     }
 
-    // debugPaintSizeEnabled = true;
-    // debugPaintBaselinesEnabled = true;
-    // debugPaintPointersEnabled = true; // any objects that are being tapped get highlighted in teal
-    // timeDilation = 50.0; // the easiest way to debug animations is to slow them way down
-
     //region setup
 
-    //    _setupLocator();
-    //    _setupRoutes();
-    //    _setupVersion();
-    //
-    //    await _setupLog();
-    //
+    // TODO: setup routes and logs
+
     await _setupSharedPref();
-    //    await _setupCache();
-    //
-    //    await _setupApi();
-    //
-    //    await _setupMessaging();
-    //    await _setupAuthentication();
-    //
-    //    await _setupSocket();
-    //    await _setupDynamicLinks();
+
+    // TODO: setup all needed providers: cache, api provider, authentication, pushing notifications, dynamic-links
 
     await _setupLocale();
 
@@ -122,12 +98,11 @@ abstract class BootstrapConfig {
       () async {
         runApp(AppBuilder(
           sharedPreferences: sharedPreferences,
-          enableLocale: true,
           locale: locale,
           theApp: MyApp(),
         ));
       },
-      // TODO: error handling at app level
+      // TODO: uncomment to handle error at app level
       //      onError: (dynamic error, StackTrace stackTrace) async {
       //        await ErrorHandler.handler(error, stackTrace: stackTrace);
       //      },
@@ -135,26 +110,10 @@ abstract class BootstrapConfig {
   }
 
   void dispose() {
-    //    _disposeApi();
-    //    _disposeCache();
-    //    _disposeMessaging();
-    //    _disposeDynamicLinks();
-    //    // NOTE: dispose socket before auth, as socket may need an auth reference
-    //    _disposeSocket();
-    //    _disposeAuthentication();
-    //
-    //    _disposeLog();
+    // TODO: dispose providers
   }
 
-  //region service locator
-
-  //  void _setupLocator() {
-  //    GetIt.I..allowReassignment = true;
-  //  }
-
-  //endregion
-
-  //region logs
+  //region logs example
 
   //  Future<void> _setupLog() async {
   //    Logging.setupLog(
@@ -173,8 +132,6 @@ abstract class BootstrapConfig {
   //    }
   //  }
 
-  //  void _disposeLog() {}
-
   //endregion
 
   Future<void> _setupLocale() async {
@@ -189,9 +146,6 @@ abstract class BootstrapConfig {
 
   //region routes
 
-  //  void _setupRoutes() {
-  //  }
-
   //endregion
 
   //region storage
@@ -204,68 +158,21 @@ abstract class BootstrapConfig {
 
   //region cache
 
-  //  Future<void> _setupCache() async {
-  //  }
-  //
-  //  void _disposeCache() {
-  //  }
-
   //endregion
 
   //region api
-
-  //  Future<void> _setupApi() async {
-  //  }
-  //
-  //  void _disposeApi() {
-  //  }
 
   //endregion
 
   //region messaging
 
-  //  Future<void> _setupMessaging() async {
-  //  }
-  //
-  //  void _disposeMessaging() {
-  //  }
-
   //endregion
 
   //region authentication
 
-  //  Future<void> _setupAuthentication() async {
-  //  }
-  //
-  //  void _disposeAuthentication() {
-  //  }
-
-  //endregion
-
-  //region sockets
-
-  //  Future<void> _setupSocket() async {
-  //  }
-  //
-  //  void _disposeSocket() {
-  //  }
-
   //endregion
 
   //region dynamicLinks
-
-  //  Future<void> _setupDynamicLinks() async {
-  //  }
-  //
-  //  void _disposeDynamicLinks() {
-  //  }
-
-  //endregion
-
-  //region version
-
-  //  void _setupVersion() {
-  //  }
 
   //endregion
 

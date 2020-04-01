@@ -1,12 +1,11 @@
 import 'dart:async';
 
-import 'package:WHOFlutter/api/user_preferences.dart';
-import 'package:meta/meta.dart';
+import '../api/user_preferences.dart';
 
-import '_interfaces.dart';
+import 'interfaces.dart';
 import 'streams/stream_command.dart';
 
-/// bloc to handle locale choice
+/// Bloc to handle locale choice
 /// You can call localeBloc.setLocale('ru'); to change current locale
 class LocaleBloc extends IBloc {
   String _stored;
@@ -14,21 +13,18 @@ class LocaleBloc extends IBloc {
   String get current => _current;
   String _current;
 
-  final bool enabled;
-
   StreamCommandPassThrough<String> _localeCommand;
+
   Stream<String> get stream => _localeCommand.output.distinct();
 
-  LocaleBloc({@required this.enabled, String locale}) {
+  LocaleBloc({String locale}) {
     _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale);
 
-    if (enabled) {
-      // seed the stream even if the value is not changed
-      // try to get the last user choice
-      _stored = UserPreferences().getLocale();
+    // seed the stream even if the value is not changed
+    // try to get the last user choice
+    _stored = UserPreferences().getLocale();
 
-      setLocale(locale);
-    }
+    setLocale(locale);
   }
 
   void setLocale(String locale) {
