@@ -19,7 +19,7 @@ class LocaleBloc extends IBloc {
   final bool enabled;
 
   StreamCommandPassThrough<String> _localeCommand;
-  Stream<String> get stream => _localeCommand.output;
+  Stream<String> get stream => _localeCommand.output.distinct();
 
   LocaleBloc({@required this.enabled, String locale}) {
     _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale, processingStreamEnabled: false);
@@ -29,7 +29,7 @@ class LocaleBloc extends IBloc {
       // try to get the last user choice
       _stored = UserPreferences().getLocale();
 
-      _localeCommand.execute(input: locale);
+      setLocale(locale);
     }
   }
 
@@ -45,8 +45,6 @@ class LocaleBloc extends IBloc {
   Future<String> _handleLocale(String locale) async {
     if (locale != _current) {
       _current = locale;
-
-
       // print('• locale changed to $locale');
 
       if (locale != _stored) {
