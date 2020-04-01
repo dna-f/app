@@ -30,7 +30,7 @@ dependencies:
   rxdart: ^0.23.1
   get_it: ^4.0.1
 
-  intl: ^0.16.1
+  intl: ^0.16.0
   flutter_localizations:
     sdk: flutter
 
