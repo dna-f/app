@@ -7,6 +7,8 @@ import '../constants.dart';
 import '_interfaces.dart';
 import 'stream_command.dart';
 
+/// bloc to handle locale choice
+/// You can call localeBloc.setLocale('ru'); to change current locale
 class LocaleBloc extends IBloc {
   String _stored;
 
@@ -16,30 +18,35 @@ class LocaleBloc extends IBloc {
   final SharedPreferences sharedPreferences;
   final bool enabled;
 
-  StreamCommandPassThrough<String> localeCommand;
+  StreamCommandPassThrough<String> _localeCommand;
+  Stream<String> get stream => _localeCommand.output;
 
   LocaleBloc({@required this.sharedPreferences, @required this.enabled, String locale}) {
-    localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale, processingStreamEnabled: false);
+    _localeCommand = StreamCommandPassThrough<String>(handler: _handleLocale, processingStreamEnabled: false);
 
     if (enabled) {
-      // eed the stream even if the value is not changed
-      // try to retrive settings from preferences
+      // seed the stream even if the value is not changed
+      // try to get the last user choice
       _stored = sharedPreferences.getString(KeysSharedPref.LOCALE);
 
-      localeCommand.execute(input: locale);
+      _localeCommand.execute(input: locale);
     }
+  }
+
+  void setLocale(String locale) {
+    _localeCommand?.execute(input: locale);
   }
 
   @override
   void dispose() {
-    localeCommand.dispose();
+    _localeCommand.dispose();
   }
 
   Future<String> _handleLocale(String locale) async {
     if (locale != _current) {
       _current = locale;
 
-      // Logging.info('• locale changed to $locale');
+      // print('• locale changed to $locale');
 
       if (locale != _stored) {
         await sharedPreferences.setString(KeysSharedPref.LOCALE, locale);

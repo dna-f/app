@@ -53,10 +53,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // get localeBloc singleton
     final localeBloc = GetIt.I.get<LocaleBloc>();
 
+    // NOTE: this streamBuilder listen for a locale change to rebuild the whole app
+    // TEST: to change current locale, you can call localeBloc.setLocale('ru');
     return StreamBuilder<String>(
-        stream: localeBloc.localeCommand.output,
+        stream: localeBloc.stream,
         initialData: null,
         builder: (context, snapshot) {
           var connectionState = snapshot.connectionState;

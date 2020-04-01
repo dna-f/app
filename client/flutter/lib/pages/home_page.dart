@@ -1,5 +1,6 @@
 import 'package:WHOFlutter/api/question_data.dart';
 import 'package:WHOFlutter/api/user_preferences.dart';
+import 'package:WHOFlutter/blocs/locale_bloc.dart';
 import 'package:WHOFlutter/components/page_button.dart';
 import 'package:WHOFlutter/components/page_scaffold/page_scaffold.dart';
 import 'package:WHOFlutter/core/bootstrap_config.dart';
@@ -16,6 +17,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get_it/get_it.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 

@@ -43,9 +43,9 @@ class AppBuilder extends StatefulWidget {
 
   //region locale
   void _setupLocale() {
-    // NOTE: registering a singleton to get it from code out of BuildContext
+    // registering a singleton with get it
+    // you can retrieve it back like this, final localeBloc = GetIt.I.get<LocaleBloc>();
     GetIt.I.registerSingleton<LocaleBloc>(localeBloc);
-    //    DateTimeHelper.setup();
   }
 
   void _disposeLocale() {
