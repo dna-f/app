@@ -30,6 +30,8 @@ void main() async {
   // TODO: check if a user locale choice has already be done ... otherwise get the default one from the device
   final deviceLocale = await DeviceLocale.getCurrentLocale();
   _locale = deviceLocale?.languageCode;
+  // TODO: remove - just for testing https://github.com/WorldHealthOrganization/app/issues/776
+  print("device language = $_locale");
 
   runApp(MyApp());
 }

@@ -22,6 +22,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: remove - just for testing https://github.com/WorldHealthOrganization/app/issues/776
+    Locale locale = Localizations.localeOf(context);
+    print("language = ${locale.languageCode}");
+
     return WillPopScope(
       onWillPop: () {
         if (this._pageController.hasClients && this._pageController.page > 0) {
