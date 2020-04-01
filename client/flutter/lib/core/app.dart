@@ -25,9 +25,15 @@ class _MyAppState extends State<MyApp> {
   final FirebaseAnalytics analytics;
   final FirebaseAnalyticsObserver observer;
 
+  LocaleBloc _localeBloc;
+
   @override
   void initState() {
     super.initState();
+
+    // get locale bloc singleton
+    _localeBloc = GetIt.I.get<LocaleBloc>();
+
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     _registerLicenses();
   }
@@ -53,13 +59,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // get localeBloc singleton
-    final localeBloc = GetIt.I.get<LocaleBloc>();
-
-    // NOTE: this streamBuilder listen for a locale change to rebuild the whole app
+    // NOTE: this streamBuilder is listening for a locale change to rebuild the whole app
     // TEST: to change current locale, you can call localeBloc.setLocale('ru');
     return StreamBuilder<String>(
-        stream: localeBloc.stream,
+        stream: _localeBloc.stream,
         initialData: null,
         builder: (context, snapshot) {
           var connectionState = snapshot.connectionState;
