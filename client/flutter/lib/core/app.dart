@@ -67,13 +67,9 @@ class _MyAppState extends State<MyApp> {
         builder: (context, snapshot) {
           var connectionState = snapshot.connectionState;
 
-          // force the app if locale disabled
-          // if (!localeEnabled) connectionState = ConnectionState.active;
-
           switch (connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
-              // return const Loader();
               break;
             case ConnectionState.active:
               return _buildMaterialApp(
@@ -81,7 +77,6 @@ class _MyAppState extends State<MyApp> {
                 snapshot.data,
               );
             case ConnectionState.done:
-              // final widget
               break;
           }
 
