@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 class Constants {
   static Color backgroundColor = Color(0xffffffff);
@@ -13,4 +14,9 @@ double contentScale(BuildContext context) {
   const tall = 896.0;
   const short = 480.0;
   return ((height - short) / (tall - short)).clamp(0.0, 1.0);
+}
+
+@sealed
+abstract class KeysSharedPref {
+  static const String LOCALE = 'LOCALE';
 }
