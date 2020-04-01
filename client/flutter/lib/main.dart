@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_device_locale/flutter_device_locale.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info/package_info.dart';
 import 'pages/home_page.dart';
@@ -12,7 +13,10 @@ import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 PackageInfo _packageInfo;
+
 PackageInfo get packageInfo => _packageInfo;
+
+String _locale;
 
 void main() async {
   // Asyncronous code that runs before the splash screen is hidden goes before
@@ -23,42 +27,42 @@ void main() async {
     _packageInfo = await PackageInfo.fromPlatform();
   }
 
+  // TODO: check if a user locale choice has already be done ... otherwise get the default one from the device
+  final deviceLocale = await DeviceLocale.getCurrentLocale();
+  _locale = deviceLocale?.languageCode;
+
   runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(analytics: analytics);
+
   @override
   _MyAppState createState() => _MyAppState(analytics, observer);
 }
 
 class _MyAppState extends State<MyApp> {
   _MyAppState(this.analytics, this.observer);
+
   final FirebaseAnalytics analytics;
   final FirebaseAnalyticsObserver observer;
 
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     _registerLicenses();
   }
 
   Future<LicenseEntry> _loadLicense() async {
     final licenseText = await rootBundle.loadString('assets/REPO_LICENSE');
-    return LicenseEntryWithLineBreaks(
-        ["https://github.com/WorldHealthOrganization/app"], licenseText);
+    return LicenseEntryWithLineBreaks(["https://github.com/WorldHealthOrganization/app"], licenseText);
   }
 
   Future<LicenseEntry> _load3pLicense() async {
-    final licenseText =
-        await rootBundle.loadString('assets/THIRD_PARTY_LICENSE');
-    return LicenseEntryWithLineBreaks([
-      "https://github.com/WorldHealthOrganization/app - THIRD_PARTY_LICENSE"
-    ], licenseText);
+    final licenseText = await rootBundle.loadString('assets/THIRD_PARTY_LICENSE');
+    return LicenseEntryWithLineBreaks(["https://github.com/WorldHealthOrganization/app - THIRD_PARTY_LICENSE"], licenseText);
   }
 
   _registerLicenses() {
@@ -74,11 +78,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "WHO COVID-19",
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        S.delegate
-      ],
+      localizationsDelegates: [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, S.delegate],
+      locale: _locale != null ? Locale(_locale, '') : null,
       supportedLocales: S.delegate.supportedLocales,
       navigatorObservers: <NavigatorObserver>[observer],
       theme: ThemeData(
@@ -86,15 +87,9 @@ class _MyAppState extends State<MyApp> {
         primaryColor: Constants.primaryColor,
         accentColor: Constants.textColor,
         brightness: Brightness.light,
-        buttonTheme: ButtonThemeData(
-            buttonColor: Constants.primaryColor,
-            textTheme: ButtonTextTheme.accent),
+        buttonTheme: ButtonThemeData(buttonColor: Constants.primaryColor, textTheme: ButtonTextTheme.accent),
       ),
-      home: Directionality(
-          child: HomePage(analytics),
-          textDirection:
-              GlobalWidgetsLocalizations(Locale(Intl.getCurrentLocale()))
-                  .textDirection),
+      home: Directionality(child: HomePage(analytics), textDirection: GlobalWidgetsLocalizations(Locale(Intl.getCurrentLocale())).textDirection),
     );
   }
 }

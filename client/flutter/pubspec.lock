@@ -90,6 +90,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_device_locale:
+    dependency: "direct main"
+    description:
+      name: flutter_device_locale
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4+1"
   flutter_html:
     dependency: "direct main"
     description:
@@ -160,7 +167,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.0"
+    version: "0.16.1"
   js:
     dependency: transitive
     description:
@@ -347,7 +354,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.11"
+    version: "0.2.15"
   typed_data:
     dependency: transitive
     description:

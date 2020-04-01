@@ -47,6 +47,11 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    // TODO: remove - just for testing https://github.com/WorldHealthOrganization/app/issues/776
+    Locale locale = Localizations.localeOf(context);
+    print("language = ${locale.languageCode}");
+
     double tileHeightFactor = 0.73;
     final String versionString = packageInfo != null
         ? '${S.of(context).commonWorldHealthOrganizationCoronavirusAppVersion(
